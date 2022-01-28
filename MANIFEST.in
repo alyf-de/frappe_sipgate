@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include sipgate *.css
+recursive-include sipgate *.csv
+recursive-include sipgate *.html
+recursive-include sipgate *.ico
+recursive-include sipgate *.js
+recursive-include sipgate *.json
+recursive-include sipgate *.md
+recursive-include sipgate *.png
+recursive-include sipgate *.py
+recursive-include sipgate *.svg
+recursive-include sipgate *.txt
+recursive-exclude sipgate *.pyc
