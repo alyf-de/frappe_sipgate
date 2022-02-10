@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-02-01 05:22:24.925533",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "credentials_section",
+  "url",
+  "token_id",
+  "token"
+ ],
+ "fields": [
+  {
+   "fieldname": "token_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Token ID",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "fieldname": "token",
+   "fieldtype": "Password",
+   "in_list_view": 1,
+   "label": "Token",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "default": "https://api.sipgate.com/v2",
+   "description": "https://api.sipgate.com/v2",
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "URL",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "credentials_section",
+   "fieldtype": "Section Break",
+   "label": "Credentials"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-02-10 18:22:06.698606",
+ "modified_by": "Administrator",
+ "module": "Sipgate",
+ "name": "Sipgate Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
