@@ -121,4 +121,3 @@ def is_primary_phone(phone: object) -> str:
 
 def is_primary_email(email: object) -> str:
 	return "primary" if email.is_primary else ""
-
