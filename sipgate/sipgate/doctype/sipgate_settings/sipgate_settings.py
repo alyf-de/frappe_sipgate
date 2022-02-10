@@ -31,7 +31,7 @@ class Sipgate:
 	def __init__(self, sipgate_settings: SipgateSettings, contact: object) -> None:
 		self.sipgate_settings = sipgate_settings
 		self.auth = HTTPBasicAuth(
-			self.sipgate_settings.token_id, self.sipgate_settings.token
+			self.sipgate_settings.token_id, self.sipgate_settings.get_password("token")
 		)
 		self.contact = contact
 

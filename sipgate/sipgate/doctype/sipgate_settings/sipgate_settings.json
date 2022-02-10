@@ -22,7 +22,7 @@
   },
   {
    "fieldname": "token",
-   "fieldtype": "Data",
+   "fieldtype": "Password",
    "in_list_view": 1,
    "label": "Token",
    "mandatory_depends_on": "enabled"
@@ -52,7 +52,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-02-04 07:00:24.169057",
+ "modified": "2022-02-10 18:22:06.698606",
  "modified_by": "Administrator",
  "module": "Sipgate",
  "name": "Sipgate Settings",
@@ -70,6 +70,5 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+ "sort_order": "DESC"
 }
