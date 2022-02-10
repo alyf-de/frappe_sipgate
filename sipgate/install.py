@@ -20,7 +20,8 @@ custom_fields = {
 			"fieldtype": "Data",
 			"label": "Sipgate Id",
 			"insert_after": "unsubscribed",
+			"read_only": 1,
+			"translatable": 0,
 		}
 	],
 }
-
