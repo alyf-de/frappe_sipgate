@@ -57,7 +57,7 @@ app_license = "--"
 # ------------
 
 # before_install = "sipgate.install.before_install"
-# after_install = "sipgate.install.after_install"
+after_install = "sipgate.install.after_install"
 
 # Uninstallation
 # ------------
