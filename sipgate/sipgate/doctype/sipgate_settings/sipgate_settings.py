@@ -1,10 +1,10 @@
 # Copyright (c) 2022, ALYF GmbH and contributors
 # For license information, please see license.txt
 
+from typing import Optional, Union
+
 import frappe
 from frappe.model.document import Document
-from frappe import _
-from typing import Union
 from sipgate.sipgate_client import SipgateClient
 
 
@@ -12,25 +12,24 @@ class SipgateSettings(Document):
 	pass
 
 
-def sync_to_sipgate(doc=None, method=None):
+def sync_to_sipgate(doc: object, method: Optional[str] = None):
 	sipgate_settings = frappe.get_single("Sipgate Settings")
 	if not sipgate_settings.enabled:
 		return
 
 	payload = get_payload(doc)
 	sipgate = SipgateClient(
-		sipgate_settings.url, sipgate_settings.token_id, sipgate_settings.token, payload
+		sipgate_settings.url, sipgate_settings.token_id, sipgate_settings.token
 	)
 
 	try:
 		if doc.sipgate_id:
-			sipgate.update()
+			sipgate.update(payload)
 		else:
-			sipgate.upload()
+			sipgate.upload(payload)
 			id = sipgate.get_sipgate_id(get_contact_number(doc))
 			frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", id)
 	except Exception:
-		frappe.msgprint(_("Couldn't sync contact to Sipgate."))
 		frappe.log_error(frappe.get_traceback())
 
 

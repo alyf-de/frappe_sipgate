@@ -1,9 +1,10 @@
 # Copyright (c) 2022, ALYF GmbH and contributors
 # For license information, please see license.txt
 
+from typing import Union
+
 import requests
 from requests.auth import HTTPBasicAuth
-from typing import Union
 
 
 class SipgateClient:
@@ -12,29 +13,27 @@ class SipgateClient:
 		sipgate_url: str,
 		sipgate_token_id: str,
 		sipgate_token: str,
-		contact: object,
 	) -> None:
 		self.sipgate_url = sipgate_url
 		self.sipgate_token_id = sipgate_token_id
 		self.sipgate_token = sipgate_token
-		self.contact = contact
 
 	@property
 	def auth(self):
 		return HTTPBasicAuth(self.sipgate_token_id, self.sipgate_token)
 
-	def upload(self) -> None:
+	def upload(self, contact: object) -> None:
 		response = requests.post(
 			url=f"{self.sipgate_url}/contacts",
-			json=self.contact,
+			json=contact,
 			auth=self.auth,
 		)
 		response.raise_for_status()
 
-	def update(self) -> None:
+	def update(self, contact: object) -> None:
 		response = requests.put(
 			url=f"{self.sipgate_url}/contacts/{self.contact.sipgate_id}",
-			json=self.contact,
+			json=contact,
 			auth=self.auth,
 		)
 		response.raise_for_status()
