@@ -22,6 +22,7 @@ custom_fields = {
 			"insert_after": "unsubscribed",
 			"read_only": 1,
 			"translatable": 0,
+			"no_copy": 1
 		}
 	],
 }
