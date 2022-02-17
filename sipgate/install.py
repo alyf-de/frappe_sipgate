@@ -18,10 +18,12 @@ custom_fields = {
 		{
 			"fieldname": "sipgate_id",
 			"fieldtype": "Data",
-			"label": "Sipgate Id",
+			"label": "Sipgate ID",
 			"insert_after": "unsubscribed",
 			"read_only": 1,
 			"translatable": 0,
+			"no_copy": 1,
+			"unique": 1,
 		}
 	],
 }
