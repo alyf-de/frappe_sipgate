@@ -21,7 +21,7 @@ def sync_to_sipgate(doc: Contact, method: Optional[str] = None):
 
 	payload = get_payload(doc)
 	sipgate = SipgateClient(
-		sipgate_settings.url, sipgate_settings.token_id, sipgate_settings.token
+		sipgate_settings.url, sipgate_settings.token_id, sipgate_settings.get_password("token")
 	)
 
 	try:
