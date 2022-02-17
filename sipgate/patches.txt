@@ -1,0 +1,2 @@
+execute:frappe.db.sql("UPDATE tabContact SET sipgate_id = NULL") # remove old duplicate IDs to enable unique constraint
+execute:from sipgate.install import after_install; after_install()
