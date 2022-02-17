@@ -30,21 +30,23 @@ class SipgateClient:
 		)
 		response.raise_for_status()
 
-	def update(self, contact: dict) -> None:
+	def update(self, contact: dict, sipgate_id: str) -> None:
 		response = requests.put(
-			url=f"{self.sipgate_url}/contacts/{self.contact.sipgate_id}",
+			url=f"{self.sipgate_url}/contacts/{sipgate_id}",
 			json=contact,
 			auth=self.auth,
 		)
 		response.raise_for_status()
 
-	def get_sipgate_id(self, phonenumbers: str, full_name: str) -> Union[str, None]:
+	def get_sipgate_id(
+		self, phonenumbers: "list[str]", full_name: str
+	) -> Union[str, None]:
 		if not phonenumbers:
 			return None
 
 		response = requests.get(
 			url=f"{self.sipgate_url}/contacts",
-			params={"phonenumbers": [phonenumbers]},
+			params={"phonenumbers": phonenumbers},
 			auth=self.auth,
 		)
 		response.raise_for_status()

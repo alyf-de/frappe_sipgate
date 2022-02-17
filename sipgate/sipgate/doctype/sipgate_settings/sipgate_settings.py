@@ -1,7 +1,7 @@
 # Copyright (c) 2022, ALYF GmbH and contributors
 # For license information, please see license.txt
 
-from typing import Optional, Union
+from typing import Optional
 
 import frappe
 from frappe.model.document import Document
@@ -19,25 +19,38 @@ def sync_to_sipgate(doc: Contact, method: Optional[str] = None):
 	if not sipgate_settings.enabled:
 		return
 
-	payload = get_payload(doc)
+	phone_numbers = get_phone_numbers(doc)
+	full_name = get_full_name(doc)
+	if not (phone_numbers and full_name):
+		# nothing makes sense if we don't know number + name
+		return
+
 	sipgate = SipgateClient(
-		sipgate_settings.url, sipgate_settings.token_id, sipgate_settings.get_password("token")
+		sipgate_settings.url,
+		sipgate_settings.token_id,
+		sipgate_settings.get_password("token"),
 	)
+	existing_id = doc.get("sipgate_id") or sipgate.get_sipgate_id(
+		phone_numbers, full_name
+	)
+	payload = get_payload(doc)
 
 	try:
-		if doc.sipgate_id:
-			sipgate.update(payload)
+		if existing_id:
+			sipgate.update(payload, existing_id)
+			if existing_id != doc.get("sipgate_id"):
+				frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", existing_id)
 		else:
 			sipgate.upload(payload)
-			id = sipgate.get_sipgate_id(get_contact_number(doc), payload.get("name"))
-			frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", id)
+			new_id = sipgate.get_sipgate_id(phone_numbers, full_name)
+			frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", new_id)
 	except Exception:
 		frappe.log_error(frappe.get_traceback())
 
 
-def get_payload(contact: Contact) -> frappe._dict:
+def get_payload(contact: Contact) -> dict:
 	payload = {
-		"name": f"{contact.get('first_name', '')} {contact.get('last_name', '')}",
+		"name": get_full_name(contact),
 		"family": contact.get("last_name", ""),
 		"given": contact.get("first_name", ""),
 		"emails": [
@@ -62,14 +75,11 @@ def get_payload(contact: Contact) -> frappe._dict:
 	if contact.company_name:
 		payload.update({"organization": [[contact.company_name]]})
 
-	if contact.get("sipgate_id"):
-		payload.update({"id": contact.get("sipgate_id")})
-
-	return frappe._dict(payload)
+	return payload
 
 
-def get_contact_number(doc) -> Union[str, None]:
-	return doc.phone_nos[0].phone if doc.phone_nos else None
+def get_phone_numbers(doc) -> "list[str]":
+	return [row.phone for row in doc.phone_nos if row.phone]
 
 
 def is_primary_phone(phone: object) -> str:
@@ -79,3 +89,6 @@ def is_primary_phone(phone: object) -> str:
 def is_primary_email(email: object) -> str:
 	return "primary" if email.is_primary else ""
 
+
+def get_full_name(contact: Contact) -> str:
+	return f"{contact.get('first_name', '')} {contact.get('last_name', '')}"
