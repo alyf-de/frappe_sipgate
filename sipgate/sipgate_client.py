@@ -22,7 +22,7 @@ class SipgateClient:
 	def auth(self):
 		return HTTPBasicAuth(self.sipgate_token_id, self.sipgate_token)
 
-	def upload(self, contact: object) -> None:
+	def upload(self, contact: dict) -> None:
 		response = requests.post(
 			url=f"{self.sipgate_url}/contacts",
 			json=contact,
@@ -30,7 +30,7 @@ class SipgateClient:
 		)
 		response.raise_for_status()
 
-	def update(self, contact: object) -> None:
+	def update(self, contact: dict) -> None:
 		response = requests.put(
 			url=f"{self.sipgate_url}/contacts/{self.contact.sipgate_id}",
 			json=contact,
