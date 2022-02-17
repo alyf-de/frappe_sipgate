@@ -38,7 +38,7 @@ class SipgateClient:
 		)
 		response.raise_for_status()
 
-	def get_sipgate_id(self, phonenumbers: str) -> Union[str, None]:
+	def get_sipgate_id(self, phonenumbers: str, full_name: str) -> Union[str, None]:
 		if not phonenumbers:
 			return None
 
@@ -49,6 +49,7 @@ class SipgateClient:
 		)
 		response.raise_for_status()
 
-		response = response.json().get("items", [])
-		return response[0].get("id") if response else None
+		items = response.json().get("items", [])
+		items = [item for item in items if item.get("name", "") == full_name]
 
+		return items[0].get("id") if items else None

@@ -29,7 +29,7 @@ def sync_to_sipgate(doc: Contact, method: Optional[str] = None):
 			sipgate.update(payload)
 		else:
 			sipgate.upload(payload)
-			id = sipgate.get_sipgate_id(get_contact_number(doc))
+			id = sipgate.get_sipgate_id(get_contact_number(doc), payload.get("name"))
 			frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", id)
 	except Exception:
 		frappe.log_error(frappe.get_traceback())
