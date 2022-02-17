@@ -44,7 +44,7 @@ class SipgateClient:
 
 		response = requests.get(
 			url=f"{self.sipgate_url}/contacts",
-			data={"phonenumbers": phonenumbers},
+			params={"phonenumbers": [phonenumbers]},
 			auth=self.auth,
 		)
 		response.raise_for_status()
