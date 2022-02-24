@@ -1,9 +1,8 @@
 # Copyright (c) 2022, ALYF GmbH and contributors
 # For license information, please see license.txt
 
-from typing import Optional
-
 import frappe
+from frappe import _
 from frappe.model.document import Document
 from frappe.contacts.doctype.contact.contact import Contact
 
@@ -14,7 +13,11 @@ class SipgateSettings(Document):
 	pass
 
 
-def sync_to_sipgate(doc: Contact, method: Optional[str] = None):
+def sync_to_sipgate(doc: Contact, method: str):
+	if method and method != "before_save":
+		frappe.log_error(_("Sync to Sipgate was called on event: {}").format(method))
+		return
+
 	sipgate_settings = frappe.get_single("Sipgate Settings")
 	if not sipgate_settings.enabled:
 		return
@@ -39,11 +42,11 @@ def sync_to_sipgate(doc: Contact, method: Optional[str] = None):
 		if existing_id:
 			sipgate.update(payload, existing_id)
 			if existing_id != doc.get("sipgate_id"):
-				frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", existing_id)
+				doc.sipgate_id = existing_id
 		else:
 			sipgate.upload(payload)
 			new_id = sipgate.get_sipgate_id(phone_numbers, full_name)
-			frappe.db.set_value(doc.doctype, doc.name, "sipgate_id", new_id)
+			doc.sipgate_id = new_id
 	except Exception:
 		frappe.log_error(frappe.get_traceback())
 
