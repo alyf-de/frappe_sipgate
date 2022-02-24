@@ -15,28 +15,24 @@ class SipgateClient:
 		sipgate_token: str,
 	) -> None:
 		self.sipgate_url = sipgate_url
-		self.sipgate_token_id = sipgate_token_id
-		self.sipgate_token = sipgate_token
+		self.session = requests.Session()
+		self.session.auth = HTTPBasicAuth(sipgate_token_id, sipgate_token)
+		self.session.headers = {"Accept": "application/json"}
 
-	@property
-	def auth(self):
-		return HTTPBasicAuth(self.sipgate_token_id, self.sipgate_token)
+	def request(self, method: str, url: str, json: dict = None, params: dict = None) -> dict:
+		response = self.session.request(method, url, json=json, params=params)
+		response.raise_for_status()
+
+		if response.text:
+			return response.json()
+
+		return {}
 
 	def upload(self, contact: dict) -> None:
-		response = requests.post(
-			url=f"{self.sipgate_url}/contacts",
-			json=contact,
-			auth=self.auth,
-		)
-		response.raise_for_status()
+		self.request("POST", f"{self.sipgate_url}/contacts", json=contact)
 
 	def update(self, contact: dict, sipgate_id: str) -> None:
-		response = requests.put(
-			url=f"{self.sipgate_url}/contacts/{sipgate_id}",
-			json=contact,
-			auth=self.auth,
-		)
-		response.raise_for_status()
+		self.request("PUT", f"{self.sipgate_url}/contacts/{sipgate_id}", json=contact)
 
 	def get_sipgate_id(
 		self, phonenumbers: "list[str]", full_name: str
@@ -44,14 +40,13 @@ class SipgateClient:
 		if not phonenumbers:
 			return None
 
-		response = requests.get(
-			url=f"{self.sipgate_url}/contacts",
-			params={"phonenumbers": phonenumbers},
-			auth=self.auth,
+		response = self.request(
+			"GET", f"{self.sipgate_url}/contacts", params={"phonenumbers": phonenumbers}
 		)
-		response.raise_for_status()
-
-		items = response.json().get("items", [])
-		items = [item for item in items if item.get("name", "") == full_name]
+		items = [
+			item
+			for item in response.get("items", [])
+			if item.get("name", "") == full_name
+		]
 
 		return items[0].get("id") if items else None
