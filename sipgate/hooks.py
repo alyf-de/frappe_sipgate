@@ -97,7 +97,7 @@ after_install = "sipgate.install.after_install"
 
 doc_events = {
 	"Contact": {
-		"on_update": "sipgate.sipgate.doctype.sipgate_settings.sipgate_settings.sync_to_sipgate",
+		"before_save": "sipgate.sipgate.doctype.sipgate_settings.sipgate_settings.sync_to_sipgate",
 	}
 }
 
