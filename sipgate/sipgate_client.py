@@ -3,6 +3,7 @@
 
 from typing import Union
 
+import json
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -19,7 +20,9 @@ class SipgateClient:
 		self.session.auth = HTTPBasicAuth(sipgate_token_id, sipgate_token)
 		self.session.headers = {"Accept": "application/json"}
 
-	def request(self, method: str, url: str, json: dict = None, params: dict = None) -> dict:
+	def request(
+		self, method: str, url: str, json: dict = None, params: dict = None
+	) -> dict:
 		response = self.session.request(method, url, json=json, params=params)
 		response.raise_for_status()
 
@@ -41,7 +44,9 @@ class SipgateClient:
 			return None
 
 		response = self.request(
-			"GET", f"{self.sipgate_url}/contacts", params={"phonenumbers": phonenumbers}
+			"GET",
+			f"{self.sipgate_url}/contacts",
+			params={"phonenumbers": json.dumps(phonenumbers, separators=(",", ":"))},
 		)
 		items = [
 			item
