@@ -19,7 +19,10 @@ def sync_to_sipgate(doc: Contact, method: str):
 		return
 
 	sipgate_settings = frappe.get_single("Sipgate Settings")
-	if not sipgate_settings.enabled:
+
+	enabled_for = set(row.enabled_doctype for row in sipgate_settings.enabled_for)
+	existing_links = set(row.link_doctype for row in doc.links)
+	if not existing_links.intersection(enabled_for):
 		return
 
 	phone_numbers = get_phone_numbers(doc)

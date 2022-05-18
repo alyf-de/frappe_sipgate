@@ -6,7 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "enabled",
+  "enabled_for",
   "credentials_section",
   "url",
   "token_id",
@@ -18,41 +18,42 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Token ID",
-   "mandatory_depends_on": "enabled"
+   "mandatory_depends_on": "enabled_for"
   },
   {
    "fieldname": "token",
    "fieldtype": "Password",
    "in_list_view": 1,
    "label": "Token",
-   "mandatory_depends_on": "enabled"
+   "mandatory_depends_on": "enabled_for"
   },
   {
    "default": "https://api.sipgate.com/v2",
-   "description": "https://api.sipgate.com/v2",
+   "description": "For example, https://api.sipgate.com/v2",
    "fieldname": "url",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "URL",
-   "mandatory_depends_on": "enabled"
+   "mandatory_depends_on": "enabled_for"
   },
   {
-   "default": "0",
-   "fieldname": "enabled",
-   "fieldtype": "Check",
-   "label": "Enabled"
-  },
-  {
-   "depends_on": "enabled",
+   "depends_on": "enabled_for",
    "fieldname": "credentials_section",
    "fieldtype": "Section Break",
    "label": "Credentials"
+  },
+  {
+   "description": "Sync contacts that are linked to records of these DocTypes",
+   "fieldname": "enabled_for",
+   "fieldtype": "Table MultiSelect",
+   "label": "Enabled For",
+   "options": "Sipgate Enabled DocType"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-02-10 18:22:06.698606",
+ "modified": "2022-05-18 17:30:46.870756",
  "modified_by": "Administrator",
  "module": "Sipgate",
  "name": "Sipgate Settings",
