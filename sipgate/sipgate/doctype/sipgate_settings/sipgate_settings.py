@@ -31,11 +31,7 @@ def sync_to_sipgate(doc: Contact, method: str):
 		# nothing makes sense if we don't know number + name
 		return
 
-	sipgate = SipgateClient(
-		sipgate_settings.url,
-		sipgate_settings.token_id,
-		sipgate_settings.get_password("token"),
-	)
+	sipgate = get_sipgate_client(sipgate_settings)
 	existing_id = doc.get("sipgate_id") or sipgate.get_sipgate_id(
 		phone_numbers, full_name
 	)
@@ -52,6 +48,34 @@ def sync_to_sipgate(doc: Contact, method: str):
 			doc.sipgate_id = new_id
 	except Exception:
 		frappe.log_error(frappe.get_traceback())
+
+
+def delete_from_sipgate(doc: Contact, method: str):
+	if method and method != "after_delete":
+		frappe.log_error(
+			_("Delete from Sipgate was called on event: {}").format(method)
+		)
+		return
+
+	sipgate_id = doc.get("sipgate_id")
+	if not sipgate_id:
+		return
+
+	sipgate_settings = frappe.get_single("Sipgate Settings")
+	sipgate = get_sipgate_client(sipgate_settings)
+
+	try:
+		sipgate.delete_contact(sipgate_id)
+	except Exception:
+		frappe.log_error(frappe.get_traceback())
+
+
+def get_sipgate_client(sipgate_settings):
+	return SipgateClient(
+		sipgate_settings.url,
+		sipgate_settings.token_id,
+		sipgate_settings.get_password("token"),
+	)
 
 
 def get_payload(contact: Contact) -> dict:

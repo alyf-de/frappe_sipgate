@@ -98,6 +98,7 @@ after_install = "sipgate.install.after_install"
 doc_events = {
 	"Contact": {
 		"before_save": "sipgate.sipgate.doctype.sipgate_settings.sipgate_settings.sync_to_sipgate",
+		"after_delete": "sipgate.sipgate.doctype.sipgate_settings.sipgate_settings.delete_from_sipgate",
 	}
 }
 
