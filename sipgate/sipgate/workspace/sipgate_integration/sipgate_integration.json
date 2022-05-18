@@ -1,0 +1,46 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-05-18 18:55:37.172220",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends": "Integrations",
+ "extends_another_page": 1,
+ "hide_custom": 0,
+ "icon": "",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Sipgate Integration",
+ "links": [
+  {
+   "hidden": 0,
+   "icon": "support",
+   "is_query_report": 0,
+   "label": "Sipgate",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sipgate Settings",
+   "link_to": "Sipgate Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  }
+ ],
+ "modified": "2022-05-18 18:59:54.052739",
+ "modified_by": "Administrator",
+ "module": "Sipgate",
+ "name": "Sipgate Integration",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 0,
+ "shortcuts": []
+}
