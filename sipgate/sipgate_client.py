@@ -3,7 +3,6 @@
 
 from typing import Union
 
-import json
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -31,10 +30,10 @@ class SipgateClient:
 
 		return {}
 
-	def upload(self, contact: dict) -> None:
+	def create_contact(self, contact: dict) -> None:
 		self.request("POST", f"{self.sipgate_url}/contacts", json=contact)
 
-	def update(self, contact: dict, sipgate_id: str) -> None:
+	def update_contact(self, contact: dict, sipgate_id: str) -> None:
 		self.request("PUT", f"{self.sipgate_url}/contacts/{sipgate_id}", json=contact)
 
 	def get_sipgate_id(

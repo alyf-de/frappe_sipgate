@@ -43,11 +43,11 @@ def sync_to_sipgate(doc: Contact, method: str):
 
 	try:
 		if existing_id:
-			sipgate.update(payload, existing_id)
+			sipgate.update_contact(payload, existing_id)
 			if existing_id != doc.get("sipgate_id"):
 				doc.sipgate_id = existing_id
 		else:
-			sipgate.upload(payload)
+			sipgate.create_contact(payload)
 			new_id = sipgate.get_sipgate_id(phone_numbers, full_name)
 			doc.sipgate_id = new_id
 	except Exception:
@@ -87,7 +87,8 @@ def get_payload(contact: Contact) -> dict:
 def get_phone_numbers(doc) -> "list[str]":
 	return [
 		row.phone.replace(" ", "").replace("-", "").replace("/", "")
-		for row in doc.phone_nos if row.phone
+		for row in doc.phone_nos
+		if row.phone
 	]
 
 
