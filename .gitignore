@@ -4,3 +4,4 @@
 *.swp
 tags
 sipgate/docs/current
+build/
