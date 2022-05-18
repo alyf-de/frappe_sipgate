@@ -46,7 +46,7 @@ class SipgateClient:
 		response = self.request(
 			"GET",
 			f"{self.sipgate_url}/contacts",
-			params={"phonenumbers": json.dumps(phonenumbers, separators=(",", ":"))},
+			params={"phonenumbers": phonenumbers},
 		)
 		items = [
 			item

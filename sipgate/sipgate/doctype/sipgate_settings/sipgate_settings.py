@@ -82,7 +82,10 @@ def get_payload(contact: Contact) -> dict:
 
 
 def get_phone_numbers(doc) -> "list[str]":
-	return [row.phone for row in doc.phone_nos if row.phone]
+	return [
+		row.phone.replace(" ", "").replace("-", "").replace("/", "")
+		for row in doc.phone_nos if row.phone
+	]
 
 
 def is_primary_phone(phone: object) -> str:
