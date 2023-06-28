@@ -20,8 +20,8 @@ def sync_to_sipgate(doc: Contact, method: str):
 
 	sipgate_settings = frappe.get_single("Sipgate Settings")
 
-	enabled_for = set(row.enabled_doctype for row in sipgate_settings.enabled_for)
-	existing_links = set(row.link_doctype for row in doc.links)
+	enabled_for = {row.enabled_doctype for row in sipgate_settings.enabled_for}
+	existing_links = {row.link_doctype for row in doc.links}
 	if not existing_links.intersection(enabled_for):
 		return
 
@@ -103,7 +103,7 @@ def get_payload(contact: Contact) -> dict:
 	}
 
 	if contact.company_name:
-		payload.update({"organization": [[contact.company_name]]})
+		payload["organization"] = [[contact.company_name]]
 
 	return payload
 
