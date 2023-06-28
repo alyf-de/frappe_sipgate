@@ -25,10 +25,7 @@ class SipgateClient:
 		response = self.session.request(method, url, json=json, params=params)
 		response.raise_for_status()
 
-		if response.text:
-			return response.json()
-
-		return {}
+		return response.json() if response.text else {}
 
 	def create_contact(self, contact: dict) -> None:
 		self.request("POST", f"{self.sipgate_url}/contacts", json=contact)
