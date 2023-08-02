@@ -1,3 +1,5 @@
+> 🚧 Currently we're experiencing problems with the Sipgate API, so this integration might not work as expected 🚧 
+
 Sync contacts from Frappe/ERPNext to Sipgate.
 
 When a contact is created or updated in ERPNext:
