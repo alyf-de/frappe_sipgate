@@ -47,7 +47,7 @@ def sync_to_sipgate(doc: Contact, method: str):
 			new_id = sipgate.get_sipgate_id(phone_numbers, full_name)
 			doc.sipgate_id = new_id
 	except Exception:
-		frappe.log_error(frappe.get_traceback())
+		frappe.log_error(title="Error while syncing contact to Sipgate")
 
 
 def delete_from_sipgate(doc: Contact, method: str):
