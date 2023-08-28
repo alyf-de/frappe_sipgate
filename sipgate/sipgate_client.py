@@ -31,6 +31,7 @@ class SipgateClient:
 		self.request("POST", f"{self.sipgate_url}/contacts", json=contact)
 
 	def update_contact(self, contact: dict, sipgate_id: str) -> None:
+		contact["id"] = sipgate_id
 		self.request("PUT", f"{self.sipgate_url}/contacts/{sipgate_id}", json=contact)
 
 	def delete_contact(self, sipgate_id: str) -> None:
