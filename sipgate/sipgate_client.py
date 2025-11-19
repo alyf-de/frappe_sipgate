@@ -19,9 +19,7 @@ class SipgateClient:
 		self.session.auth = HTTPBasicAuth(sipgate_token_id, sipgate_token)
 		self.session.headers = {"Accept": "application/json"}
 
-	def request(
-		self, method: str, url: str, json: dict = None, params: dict = None
-	) -> dict:
+	def request(self, method: str, url: str, json: dict | None = None, params: dict | None = None) -> dict:
 		response = self.session.request(method, url, json=json, params=params)
 		response.raise_for_status()
 
@@ -37,9 +35,7 @@ class SipgateClient:
 	def delete_contact(self, sipgate_id: str) -> None:
 		self.request("DELETE", f"{self.sipgate_url}/contacts/{sipgate_id}")
 
-	def get_sipgate_id(
-		self, phonenumbers: "list[str]", full_name: str
-	) -> Union[str, None]:
+	def get_sipgate_id(self, phonenumbers: "list[str]", full_name: str) -> str | None:
 		if not phonenumbers:
 			return None
 
@@ -48,10 +44,6 @@ class SipgateClient:
 			f"{self.sipgate_url}/contacts",
 			params={"phonenumbers": phonenumbers},
 		)
-		items = [
-			item
-			for item in response.get("items", [])
-			if item.get("name", "") == full_name
-		]
+		items = [item for item in response.get("items", []) if item.get("name", "") == full_name]
 
 		return items[0].get("id") if items else None

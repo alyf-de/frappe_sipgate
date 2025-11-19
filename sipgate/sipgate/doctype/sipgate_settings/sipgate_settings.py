@@ -3,8 +3,8 @@
 
 import frappe
 from frappe import _
-from frappe.model.document import Document
 from frappe.contacts.doctype.contact.contact import Contact
+from frappe.model.document import Document
 
 from sipgate.sipgate_client import SipgateClient
 
@@ -32,9 +32,7 @@ def sync_to_sipgate(doc: Contact, method: str):
 		return
 
 	sipgate = get_sipgate_client(sipgate_settings)
-	existing_id = doc.get("sipgate_id") or sipgate.get_sipgate_id(
-		phone_numbers, full_name
-	)
+	existing_id = doc.get("sipgate_id") or sipgate.get_sipgate_id(phone_numbers, full_name)
 	payload = get_payload(doc)
 
 	try:
@@ -52,9 +50,7 @@ def sync_to_sipgate(doc: Contact, method: str):
 
 def delete_from_sipgate(doc: Contact, method: str):
 	if method and method != "after_delete":
-		frappe.log_error(
-			_("Delete from Sipgate was called on event: {}").format(method)
-		)
+		frappe.log_error(_("Delete from Sipgate was called on event: {}").format(method))
 		return
 
 	sipgate_id = doc.get("sipgate_id")
@@ -110,9 +106,7 @@ def get_payload(contact: Contact) -> dict:
 
 def get_phone_numbers(doc) -> "list[str]":
 	return [
-		row.phone.replace(" ", "").replace("-", "").replace("/", "")
-		for row in doc.phone_nos
-		if row.phone
+		row.phone.replace(" ", "").replace("-", "").replace("/", "") for row in doc.phone_nos if row.phone
 	]
 
 
