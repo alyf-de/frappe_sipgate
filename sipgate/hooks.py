@@ -62,7 +62,7 @@ after_install = "sipgate.install.after_install"
 # Uninstallation
 # ------------
 
-# before_uninstall = "sipgate.uninstall.before_uninstall"
+before_uninstall = "sipgate.uninstall.before_uninstall"
 # after_uninstall = "sipgate.uninstall.after_uninstall"
 
 # Desk Notifications
