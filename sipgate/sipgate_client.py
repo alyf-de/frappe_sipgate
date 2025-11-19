@@ -1,8 +1,6 @@
 # Copyright (c) 2022, ALYF GmbH and contributors
 # For license information, please see license.txt
 
-from typing import Union
-
 import requests
 from requests.auth import HTTPBasicAuth
 
