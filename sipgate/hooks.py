@@ -17,7 +17,7 @@ add_to_apps_screen = [
 		"name": app_name,
 		"logo": "/assets/sipgate/img/logo.png",
 		"title": app_title,
-		"route": "/desk/sipgate-integration",
+		"route": "/desk/sipgate-settings",
 		"has_permission": "sipgate.permission.has_app_permission",
 	}
 ]

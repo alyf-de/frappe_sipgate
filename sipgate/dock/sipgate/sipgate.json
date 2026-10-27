@@ -9,12 +9,12 @@
    "added": 0,
    "hidden": 0,
    "icon": "phone",
-   "link_to": "Sipgate Integration",
-   "link_type": "Workspace",
+   "link_to": "Sipgate",
+   "link_type": "Sidebar",
    "title": "Sipgate"
   }
  ],
- "modified": "2026-10-27 18:27:48.520455",
+ "modified": "2026-10-27 19:17:43.477081",
  "modified_by": "Administrator",
  "mount_on": "",
  "name": "sipgate",

@@ -11,21 +11,6 @@
    "child": 0,
    "collapsible": 1,
    "hidden": 0,
-   "indent": 0,
-   "is_default_module": 0,
-   "keep_closed": 0,
-   "label": "Home",
-   "link_to": "Sipgate Integration",
-   "link_type": "Workspace",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "added": 0,
-   "child": 0,
-   "collapsible": 1,
-   "hidden": 0,
    "icon": "wrench",
    "indent": 0,
    "is_default_module": 0,
@@ -53,7 +38,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-27 18:27:48.490837",
+ "modified": "2026-10-27 19:17:43.327882",
  "modified_by": "Administrator",
  "module": "Sipgate",
  "name": "Sipgate",
