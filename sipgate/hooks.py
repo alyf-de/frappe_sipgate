@@ -9,6 +9,19 @@ app_color = "grey"
 app_email = "hallo@alyf.de"
 app_license = "--"
 
+# Apps
+# ------------------
+
+add_to_apps_screen = [
+	{
+		"name": app_name,
+		"logo": "/assets/sipgate/img/logo.png",
+		"title": app_title,
+		"route": "/desk/sipgate-integration",
+		"has_permission": "sipgate.permission.has_app_permission",
+	}
+]
+
 # Includes in <head>
 # ------------------
 
