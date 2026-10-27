@@ -104,7 +104,7 @@ def get_payload(contact: Contact) -> dict:
 	return payload
 
 
-def get_phone_numbers(doc) -> "list[str]":
+def get_phone_numbers(doc) -> list[str]:
 	return [
 		row.phone.replace(" ", "").replace("-", "").replace("/", "") for row in doc.phone_nos if row.phone
 	]

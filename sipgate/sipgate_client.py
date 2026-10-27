@@ -33,7 +33,7 @@ class SipgateClient:
 	def delete_contact(self, sipgate_id: str) -> None:
 		self.request("DELETE", f"{self.sipgate_url}/contacts/{sipgate_id}")
 
-	def get_sipgate_id(self, phonenumbers: "list[str]", full_name: str) -> str | None:
+	def get_sipgate_id(self, phonenumbers: list[str], full_name: str) -> str | None:
 		if not phonenumbers:
 			return None
 
